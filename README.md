@@ -116,7 +116,7 @@ The database file lives in `tasks.db`. It is created automatically the first tim
 2. Run `node server.js` to start the server. The database file will be created and seeded automatically.
 
 ### DB Browser Screenshot
-*(User: Please take a screenshot of tasks.db open in DB Browser showing the `tasks` table with its rows, and replace this text with the image `![DB Browser](screenshot.png)`)*
+![DB Browser](screenshot.png)
 
 ### Example SQL Query (Stage 4)
 ```sql
