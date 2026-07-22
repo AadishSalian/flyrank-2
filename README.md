@@ -84,7 +84,7 @@ HTTP/1.1 404 Not Found
 
 > Run the server, open `http://localhost:3000/docs`, try the full CRUD cycle
 > with "Try it out", and paste a screenshot here before submitting:
-> ![Swagger UI](Screenshot 2026-07-22 205311.png)
+> ![Swagger UI](Screenshot%202026-07-22%20205311.png)
 ## The mortality experiment
 
 Create a few tasks, then restart the server (`Ctrl+C`, then `node server.js`
