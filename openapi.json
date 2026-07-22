@@ -1,0 +1,147 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Task API",
+    "version": "1.0.0",
+    "description": "A small in-memory CRUD API for managing a to-do list."
+  },
+  "servers": [{ "url": "http://localhost:3000" }],
+  "paths": {
+    "/stats": {
+      "get": {
+        "summary": "Get task counters",
+        "responses": {
+          "200": {
+            "description": "Counts of total, done and open tasks",
+            "content": {
+              "application/json": {
+                "example": { "total": 3, "done": 1, "open": 2 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reset": {
+      "post": {
+        "summary": "Reset tasks back to the 3 example tasks",
+        "responses": {
+          "200": { "description": "Tasks were reset" }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "List all tasks",
+        "responses": {
+          "200": {
+            "description": "An array of tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Task" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new task",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "title": { "type": "string" } },
+                "required": ["title"]
+              },
+              "example": { "title": "Buy milk" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task created",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Task" } }
+            }
+          },
+          "400": { "description": "Missing or empty title" }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "summary": "Get a single task by id",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested task",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Task" } }
+            }
+          },
+          "404": { "description": "Task not found" }
+        }
+      },
+      "put": {
+        "summary": "Update a task's title and/or done status",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "done": { "type": "boolean" }
+                }
+              },
+              "example": { "done": true }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated task",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Task" } }
+            }
+          },
+          "400": { "description": "Invalid update body" },
+          "404": { "description": "Task not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a task",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "204": { "description": "Task deleted" },
+          "404": { "description": "Task not found" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "title": { "type": "string" },
+          "done": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
